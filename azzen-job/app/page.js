@@ -25,10 +25,10 @@ const CheckoutForm = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://api.preprod.konnect.network/api/v2/payments/init-payment",
+        "https://api.sandbox.konnect.network/api/v2/payments/init-payment",
         {
-          ...formData, // Spreads the current state into the request body
-          receiverWalletId: "<YOUR_WALLET_ID>",
+          ...formData,
+          receiverWalletId: process.env.NEXT_PUBLIC_WALLET_ID,
           acceptedPaymentMethods: ["bank_card", "e-DINAR", "flouci"],
           token: "TND",
           type: "immediate",
@@ -38,12 +38,10 @@ const CheckoutForm = () => {
           addPaymentFeesToAmount: false,
           webhook: "<YOUR_WEBHOOK_URL>",
           silentWebhook: true,
-          successUrl: "<YOUR_SUCCESS_URL>",
-          failUrl: "<YOUR_FAIL_URL>",
         },
         {
           headers: {
-            "x-api-key": "<YOUR_API_KEY>", // Replace with your actual API key
+            "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
           },
         }
       );
